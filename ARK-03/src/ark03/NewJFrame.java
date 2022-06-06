@@ -1,28 +1,26 @@
 package ark03;
 
 import java.util.ArrayList;
+import static oracle.jrockit.jfr.events.Bits.floatValue;
 
 public class NewJFrame extends javax.swing.JFrame {
 
     ArrayList<Numeros> arrayList = new ArrayList();
+    int tamanho = 0;
     int x = 0;
     int maior = 0;
     int menor = 0;
     float media;
-
-    String valores;
-    int[] vetor = new int[6];
-    int n = 0;
-    int m = 2;
-
-    int somar;
-    int multiplicar;
+    int somarNumero = 0;
+    int somarMultiplicacao = 1;
 
     public NewJFrame() {
         initComponents();
         Menor.setEditable(false);
         Maior.setEditable(false);
         Media.setEditable(false);
+        Soma.setEditable(false);
+        Multiplicacao.setEditable(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -41,12 +39,10 @@ public class NewJFrame extends javax.swing.JFrame {
         Menor = new javax.swing.JTextField();
         Media = new javax.swing.JTextField();
         msg1 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        campoValores = new javax.swing.JTextField();
-        CampoOP = new javax.swing.JComboBox<>();
-        btnCalcular = new javax.swing.JButton();
-        msg2 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        Soma = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        Multiplicacao = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -57,7 +53,7 @@ public class NewJFrame extends javax.swing.JFrame {
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Parte 1", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 18))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Operações Matemáticas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 18))); // NOI18N
         jPanel1.setForeground(new java.awt.Color(204, 204, 204));
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
@@ -92,6 +88,11 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel4.setText("Média dos números:");
 
         Maior.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        Maior.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MaiorActionPerformed(evt);
+            }
+        });
 
         Menor.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         Menor.addActionListener(new java.awt.event.ActionListener() {
@@ -110,29 +111,56 @@ public class NewJFrame extends javax.swing.JFrame {
         msg1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         msg1.setText(" ");
 
+        jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel6.setText("Somas dos números:");
+
+        Soma.setEditable(false);
+        Soma.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        Soma.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SomaActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel7.setText("Multiplicação dos números:");
+
+        Multiplicacao.setEditable(false);
+        Multiplicacao.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        Multiplicacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MultiplicacaoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(novoNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnOK, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnOK, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(btnExibir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(msg1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(Multiplicacao)
+                    .addComponent(Soma)
                     .addComponent(Media, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
                     .addComponent(Menor)
                     .addComponent(Maior)))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1)
-                .addGap(0, 326, Short.MAX_VALUE))
-            .addComponent(btnExibir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(msg1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,72 +184,20 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(Media, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(Soma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(Multiplicacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnExibir)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
-        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Parte 2", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 18))); // NOI18N
-
-        jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel5.setText("Valores:");
-
-        campoValores.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        campoValores.setText(" ");
-        campoValores.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoValoresActionPerformed(evt);
-            }
-        });
-
-        CampoOP.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        CampoOP.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Somar", "Multiplicar" }));
-        CampoOP.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CampoOPActionPerformed(evt);
-            }
-        });
-
-        btnCalcular.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btnCalcular.setText("Calcular");
-        btnCalcular.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCalcularActionPerformed(evt);
-            }
-        });
-
-        msg2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        msg2.setText(" ");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(msg2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(campoValores))
-            .addComponent(CampoOP, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnCalcular, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(campoValores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(msg2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(CampoOP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnCalcular)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jMenu1.setText("File");
+        jMenu1.setText("Sobre");
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItem1.setText("Dados do Progama ");
@@ -242,9 +218,7 @@ public class NewJFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -252,8 +226,6 @@ public class NewJFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -261,68 +233,48 @@ public class NewJFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void campoValoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoValoresActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoValoresActionPerformed
-
-    private void btnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularActionPerformed
-        valores = campoValores.getText().trim();
-        campoValores.setText("");
-        try {
-            for (int i = 0; i < 6; i++) {
-                vetor[i] = Integer.parseInt(valores.substring(n, m));
-
-                n += 2;
-                m += 2;
-            }
-            String op = (String) CampoOP.getSelectedItem();
-            if (op.equals("Somar")) {
-                for (int i = 0; i < 6; i++) {
-                    somar = somar + vetor[i];
-                    msg2.setText("O resultado é: " + Integer.toString(somar));
-                }
-            }
-            if (op.equals("Multiplicar")) {
-                multiplicar = (((((vetor[0] * vetor[1]) * vetor[2]) * vetor[3]) * vetor[4]) * vetor[5]);
-                msg2.setText("O resultado é: " + Integer.toString(multiplicar));
-            }
-        } catch (Exception e) {
-            msg2.setText("Digite somente 12 numeros em sequencia sem espaço entre eles!");
-        }
-
-        n = 0;
-        m = 2;
-    }//GEN-LAST:event_btnCalcularActionPerformed
-
-    private void CampoOPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CampoOPActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CampoOPActionPerformed
-
     private void MenorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenorActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_MenorActionPerformed
 
     private void btnExibirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExibirActionPerformed
-        int tamanho = 0;
         tamanho = arrayList.size();
         if (tamanho > 0) {
             menor = arrayList.get(0).getNumeros();
-
             int i = 0;
             while (i != tamanho) {
                 if (arrayList.get(i).getNumeros() < menor) {
                     menor = arrayList.get(i).getNumeros();
                 }
+
                 if (arrayList.get(i).getNumeros() > maior) {
                     maior = arrayList.get(i).getNumeros();
                 }
-                media = media + arrayList.get(i).getNumeros();
+                
+                somarNumero = somarNumero + arrayList.get(i).getNumeros();
+                somarMultiplicacao = somarMultiplicacao * arrayList.get(i).getNumeros();
+
                 i += 1;
             }
-            media = media / tamanho;
+            
+            media = floatValue(somarNumero) / tamanho;
+
             Menor.setText(Integer.toString(menor));
             Maior.setText(Integer.toString(maior));
             Media.setText(Float.toString(media));
+            Soma.setText(Integer.toString(somarNumero));
+            Multiplicacao.setText(Integer.toString(somarMultiplicacao));
+
+            msg1.setText(" ");
+            menor = 0;
+            maior = 0;
+            media = 0;
+            somarNumero = 0;
+            somarMultiplicacao = 1;
+            tamanho = 0;
+            arrayList.clear();
+            x = 0;
+
         } else {
             msg1.setText("Digite um numero para continuar!");
         }
@@ -332,22 +284,40 @@ public class NewJFrame extends javax.swing.JFrame {
         try {
             this.arrayList.add(new Numeros(x));
             this.arrayList.get(x).setNumeros(Integer.parseInt(novoNumero.getText().trim()));
-            //this.numeros[x] = Integer.parseInt(novoNumero.getText().trim());
+
             novoNumero.setText("");
+            Menor.setText("");
+            Maior.setText("");
+            Media.setText("");
+            Soma.setText("");
+            Multiplicacao.setText("");
+            
             x += 1;
         } catch (Exception e) {
-            msg1.setText("Digite somente numero!");
+            msg1.setText("Digite somente numeros inteiros!");
         }
     }//GEN-LAST:event_btnOKActionPerformed
 
     private void MediaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MediaActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_MediaActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-     Sobre sobre = new Sobre();
+        Sobre sobre = new Sobre();
         sobre.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void SomaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SomaActionPerformed
+
+    }//GEN-LAST:event_SomaActionPerformed
+
+    private void MultiplicacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MultiplicacaoActionPerformed
+
+    }//GEN-LAST:event_MultiplicacaoActionPerformed
+
+    private void MaiorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MaiorActionPerformed
+
+    }//GEN-LAST:event_MaiorActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -358,26 +328,24 @@ public class NewJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> CampoOP;
     private javax.swing.JTextField Maior;
     private javax.swing.JTextField Media;
     private javax.swing.JTextField Menor;
-    private javax.swing.JButton btnCalcular;
+    private javax.swing.JTextField Multiplicacao;
+    private javax.swing.JTextField Soma;
     private javax.swing.JButton btnExibir;
     private javax.swing.JButton btnOK;
-    private javax.swing.JTextField campoValores;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel msg1;
-    private javax.swing.JLabel msg2;
     private javax.swing.JTextField novoNumero;
     // End of variables declaration//GEN-END:variables
 }

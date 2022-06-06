@@ -14,7 +14,5 @@ public class Numeros {
 
     public void setNumeros(int numeros) {
         this.numeros = numeros;
-    }
-  
-    
+    } 
 }
