@@ -2,9 +2,7 @@
 
 # Projeto ARK 03
 
-Os Projetos nomeado ARK são uma aplicação desenvolvidos em java na IDE NetBens. O objetivo é desenvolver um projeto partindo de listas de exercícios encontrados na Internet, seriam projetos mais simples.
-
-<!-- Lorem ipsum faucibus commodo ornare orci sociosqu elit lorem iaculis consequat, et elit malesuada etiam pulvinar nunc ut netus dui euismod, nulla mauris at placerat commodo fermentum maecenas euismod tempus. congue morbi adipiscing venenatis porttitor interdum faucibus purus nibh ligula praesent, dolor donec eleifend congue dolor dapibus quis fermentum aliquam, fringilla ante ad nisi vivamus ligula scelerisque luctus laoreet. proin eget quisque duis nostra potenti amet ante dui curae, -->
+Os projetos nomeados ARK são uma aplicação desenvolvida em Java na IDE NetBeans. O objetivo é desenvolver um projeto partindo de listas de exercícios encontrados na Internet, seriam projetos mais simples.
 
 Ark 3 é um projeto que realiza operações matemáticas, através do projeto o usuário poderá informar quantos números ele desejar e aplicação retornará o maior número informado, o menor número informado, a média dos números informados, a soma dos números informados e a multiplicação dos números informados.
 
